@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,6 +20,7 @@ namespace ChurchAddIn
         private Bible bible = null;
         private Book currentBook = null;
         private Chapter currentChapter = null;
+        private object locker = new object();
         public BibleForm(BibleVersion version)
         {
             InitializeComponent();
@@ -293,7 +295,7 @@ namespace ChurchAddIn
         }
 
         private void copyAllToolStripMenuItem_Click(object sender, EventArgs e)
-        {    
+        {
             bibleTextBox.SelectAll();
             bibleTextBox.Copy();
         }
@@ -344,6 +346,50 @@ namespace ChurchAddIn
         {
             searchBox.SelectAll();
             searchBox.Copy();
+        }
+
+        private async void searchButton_Click(object sender, EventArgs e)
+        {
+            label2.Text = "";
+            bibleTextBox.Clear();
+            treeChapterView.SelectedNode = null;
+            nextButton.Enabled = false;
+            prevButton.Enabled = false;
+            searchButton.Enabled = false;
+            paragrapgCheckBox.Enabled = false;
+            verseNumberCheckBox.Enabled = false;
+            treeChapterView.Enabled = false;
+            if (!string.IsNullOrWhiteSpace(searchBox.Text))
+            {
+                await Task.Factory.StartNew(() =>
+                {
+                    var str = searchBox.Text.ToUpper();
+                    var strBuilder = new StringBuilder();
+                    foreach (var book in bible.Books)
+                    {
+                        foreach (var chapter in book.Chapters)
+                        {
+                            foreach (var verse in chapter.Verses)
+                            {
+                                if (verse.Text.ToUpper().Contains(str))
+                                {
+                                    strBuilder.Append(book.Name + " " + chapter.Number + ":" + verse.Number + Environment.NewLine);
+                                    strBuilder.Append(verse.Text + Environment.NewLine + Environment.NewLine);
+                                }
+                            }
+                        }
+                    }
+                    bibleTextBox.Text = strBuilder.ToString();
+                });                
+            }
+            if(string.IsNullOrWhiteSpace(bibleTextBox.Text))
+            {
+                bibleTextBox.Text = "No results.";
+            }
+            searchButton.Enabled = true;
+            paragrapgCheckBox.Enabled = true;
+            verseNumberCheckBox.Enabled = true;
+            treeChapterView.Enabled = true;
         }
     }
 }
