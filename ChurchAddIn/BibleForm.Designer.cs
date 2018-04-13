@@ -50,6 +50,10 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.fromComboBox = new System.Windows.Forms.ComboBox();
+            this.toComboBox = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
             this.SuspendLayout();
@@ -70,9 +74,9 @@
             // 
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(270, 12);
+            this.label1.Location = new System.Drawing.Point(471, 5);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(76, 63);
+            this.label1.Size = new System.Drawing.Size(76, 64);
             this.label1.TabIndex = 2;
             this.label1.Text = "Search:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -81,7 +85,7 @@
             // 
             this.searchButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.searchButton.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.searchButton.Location = new System.Drawing.Point(876, 28);
+            this.searchButton.Location = new System.Drawing.Point(1027, 22);
             this.searchButton.Name = "searchButton";
             this.searchButton.Size = new System.Drawing.Size(90, 30);
             this.searchButton.TabIndex = 4;
@@ -96,10 +100,10 @@
             this.searchBox.BackColor = System.Drawing.Color.White;
             this.searchBox.EnableAutoDragDrop = true;
             this.searchBox.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.searchBox.Location = new System.Drawing.Point(352, 12);
+            this.searchBox.Location = new System.Drawing.Point(547, 5);
             this.searchBox.Name = "searchBox";
             this.searchBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.searchBox.Size = new System.Drawing.Size(512, 63);
+            this.searchBox.Size = new System.Drawing.Size(474, 64);
             this.searchBox.TabIndex = 8;
             this.searchBox.Text = "";
             // 
@@ -116,7 +120,7 @@
             this.bibleTextBox.Name = "bibleTextBox";
             this.bibleTextBox.ReadOnly = true;
             this.bibleTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.bibleTextBox.Size = new System.Drawing.Size(700, 516);
+            this.bibleTextBox.Size = new System.Drawing.Size(851, 516);
             this.bibleTextBox.TabIndex = 9;
             this.bibleTextBox.Text = "";
             // 
@@ -127,7 +131,7 @@
             this.verseNumberCheckBox.Checked = true;
             this.verseNumberCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.verseNumberCheckBox.Font = new System.Drawing.Font("Calibri", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.verseNumberCheckBox.Location = new System.Drawing.Point(13, 13);
+            this.verseNumberCheckBox.Location = new System.Drawing.Point(13, 9);
             this.verseNumberCheckBox.Name = "verseNumberCheckBox";
             this.verseNumberCheckBox.Size = new System.Drawing.Size(174, 25);
             this.verseNumberCheckBox.TabIndex = 10;
@@ -142,7 +146,7 @@
             this.paragrapgCheckBox.Checked = true;
             this.paragrapgCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.paragrapgCheckBox.Font = new System.Drawing.Font("Calibri", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paragrapgCheckBox.Location = new System.Drawing.Point(13, 40);
+            this.paragrapgCheckBox.Location = new System.Drawing.Point(13, 42);
             this.paragrapgCheckBox.Name = "paragrapgCheckBox";
             this.paragrapgCheckBox.Size = new System.Drawing.Size(216, 25);
             this.paragrapgCheckBox.TabIndex = 11;
@@ -189,9 +193,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(270, 78);
+            this.label2.Location = new System.Drawing.Point(270, 72);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(700, 44);
+            this.label2.Size = new System.Drawing.Size(851, 50);
             this.label2.TabIndex = 13;
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -274,12 +278,56 @@
             this.toolStripMenuItem3.Text = "Copy All";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
+            // fromComboBox
+            // 
+            this.fromComboBox.Font = new System.Drawing.Font("Calibri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fromComboBox.FormattingEnabled = true;
+            this.fromComboBox.Location = new System.Drawing.Point(274, 5);
+            this.fromComboBox.Name = "fromComboBox";
+            this.fromComboBox.Size = new System.Drawing.Size(191, 29);
+            this.fromComboBox.TabIndex = 18;
+            // 
+            // toComboBox
+            // 
+            this.toComboBox.Font = new System.Drawing.Font("Calibri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toComboBox.FormattingEnabled = true;
+            this.toComboBox.Location = new System.Drawing.Point(274, 40);
+            this.toComboBox.Name = "toComboBox";
+            this.toComboBox.Size = new System.Drawing.Size(191, 29);
+            this.toComboBox.TabIndex = 19;
+            // 
+            // label5
+            // 
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.Font = new System.Drawing.Font("Calibri", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(224, 40);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(44, 27);
+            this.label5.TabIndex = 21;
+            this.label5.Text = "To:";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label6
+            // 
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.Font = new System.Drawing.Font("Calibri", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(209, 7);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(59, 27);
+            this.label6.TabIndex = 20;
+            this.label6.Text = "From:";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // BibleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(982, 653);
+            this.ClientSize = new System.Drawing.Size(1133, 653);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.toComboBox);
+            this.Controls.Add(this.fromComboBox);
             this.Controls.Add(this.prevButton);
             this.Controls.Add(this.nextButton);
             this.Controls.Add(this.label4);
@@ -294,7 +342,7 @@
             this.Controls.Add(this.treeChapterView);
             this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(550, 400);
+            this.MinimumSize = new System.Drawing.Size(750, 400);
             this.Name = "BibleForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BibleForm";
@@ -327,5 +375,9 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ComboBox fromComboBox;
+        private System.Windows.Forms.ComboBox toComboBox;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
     }
 }

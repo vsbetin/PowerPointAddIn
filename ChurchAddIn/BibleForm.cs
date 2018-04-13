@@ -20,7 +20,6 @@ namespace ChurchAddIn
         private Bible bible = null;
         private Book currentBook = null;
         private Chapter currentChapter = null;
-        private object locker = new object();
         public BibleForm(BibleVersion version)
         {
             InitializeComponent();
@@ -29,7 +28,11 @@ namespace ChurchAddIn
             GetBibleName();
             LoadBibleOnForm();
             bibleTextBox.ContextMenuStrip = contextMenuStrip1;
-            searchBox.ContextMenuStrip = contextMenuStrip2;
+            searchBox.ContextMenuStrip = contextMenuStrip2;            
+            fromComboBox.Items.AddRange(bible.Books.Select(book => book.Name).ToArray());
+            fromComboBox.SelectedIndex = 0;
+            toComboBox.Items.AddRange(bible.Books.Select(book => book.Name).ToArray());
+            toComboBox.SelectedIndex = bible.Books.Count - 1;
         }
 
         [DllImport("user32.dll")]
@@ -61,36 +64,44 @@ namespace ChurchAddIn
                    cursPos.Y <= control.Location.Y + control.Size.Height;
         }
 
-        private void TitleName(string book, string chapter)
+        private void TitleName(string book = null, string chapter = null)
         {
             label2.Text = book + ": " + chapter;
             if (version == BibleVersion.RusianNew)
             {
-                this.Text = "Новый русский перевод " + book + ": " + chapter;
+                this.Text = "Новый русский перевод ";
             }
             else if (version == BibleVersion.RusianSynodal)
             {
-                this.Text = "Синодальный перевод " + book + ": " + chapter;
+                this.Text = "Синодальный перевод ";
             }
             else if (version == BibleVersion.UkranianOgiyenko)
             {
-                this.Text = "Переклад І.Огієнка " + book + ": " + chapter;
+                this.Text = "Переклад І.Огієнка ";
             }
             else if (version == BibleVersion.EnglishKJV)
             {
-                this.Text = "English KJV " + book + ": " + chapter;
+                this.Text = "English KJV ";
             }
             else if (version == BibleVersion.EnglishASV)
             {
-                this.Text = "English ASV " + book + ": " + chapter;
+                this.Text = "English ASV ";
             }
             else if (version == BibleVersion.EnglishNIV)
             {
-                this.Text = "English NIV " + book + ": " + chapter;
+                this.Text = "English NIV ";
             }
             else
             {
-                this.Text = "English ESV " + book + ": " + chapter;
+                this.Text = "English NIV ";
+            }
+            if (book != null)
+            {
+                this.Text += book;
+                if (chapter != null)
+                {
+                    this.Text += ": " + chapter;
+                }
             }
         }
 
@@ -350,6 +361,7 @@ namespace ChurchAddIn
 
         private async void searchButton_Click(object sender, EventArgs e)
         {
+            GetBibleName();
             label2.Text = "";
             bibleTextBox.Clear();
             treeChapterView.SelectedNode = null;
@@ -359,33 +371,51 @@ namespace ChurchAddIn
             paragrapgCheckBox.Enabled = false;
             verseNumberCheckBox.Enabled = false;
             treeChapterView.Enabled = false;
+            fromComboBox.Enabled = false;
+            toComboBox.Enabled = false;
             if (!string.IsNullOrWhiteSpace(searchBox.Text))
             {
+                var str = searchBox.Text.ToUpper();
+                var strBuilder = new StringBuilder();
+                var startBook = fromComboBox.Text;
+                var endBook = toComboBox.Text;
                 await Task.Factory.StartNew(() =>
                 {
-                    var str = searchBox.Text.ToUpper();
-                    var strBuilder = new StringBuilder();
+                    bool isInBooksRange = false;
                     foreach (var book in bible.Books)
                     {
-                        foreach (var chapter in book.Chapters)
+                        if(book.Name == startBook)
                         {
-                            foreach (var verse in chapter.Verses)
+                            isInBooksRange = true;
+                        }
+                        if (isInBooksRange)
+                        {
+                            foreach (var chapter in book.Chapters)
                             {
-                                if (verse.Text.ToUpper().Contains(str))
+                                foreach (var verse in chapter.Verses)
                                 {
-                                    strBuilder.Append(book.Name + " " + chapter.Number + ":" + verse.Number + Environment.NewLine);
-                                    strBuilder.Append(verse.Text + Environment.NewLine + Environment.NewLine);
+                                    if (verse.Text.ToUpper().Contains(str))
+                                    {
+                                        strBuilder.Append(book.Name + " " + chapter.Number + ":" + verse.Number + Environment.NewLine);
+                                        strBuilder.Append(verse.Text + Environment.NewLine + Environment.NewLine);
+                                    }
                                 }
                             }
                         }
+                        if(book.Name == endBook)
+                        {
+                            break;
+                        }
                     }
-                    bibleTextBox.Text = strBuilder.ToString();
-                });                
+                });
+                bibleTextBox.Text = strBuilder.ToString();
             }
             if(string.IsNullOrWhiteSpace(bibleTextBox.Text))
             {
                 bibleTextBox.Text = "No results.";
             }
+            fromComboBox.Enabled = true;
+            toComboBox.Enabled = true;
             searchButton.Enabled = true;
             paragrapgCheckBox.Enabled = true;
             verseNumberCheckBox.Enabled = true;
