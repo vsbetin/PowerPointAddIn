@@ -20,6 +20,8 @@ namespace ChurchAddIn
         private Bible bible = null;
         private Book currentBook = null;
         private Chapter currentChapter = null;
+        private int fromBook;
+        private int toBook;
         public BibleForm(BibleVersion version)
         {
             InitializeComponent();
@@ -28,7 +30,7 @@ namespace ChurchAddIn
             GetBibleName();
             LoadBibleOnForm();
             bibleTextBox.ContextMenuStrip = contextMenuStrip1;
-            searchBox.ContextMenuStrip = contextMenuStrip2;            
+            searchBox.ContextMenuStrip = contextMenuStrip2;
             fromComboBox.Items.AddRange(bible.Books.Select(book => book.Name).ToArray());
             fromComboBox.SelectedIndex = 0;
             toComboBox.Items.AddRange(bible.Books.Select(book => book.Name).ToArray());
@@ -384,7 +386,7 @@ namespace ChurchAddIn
                     bool isInBooksRange = false;
                     foreach (var book in bible.Books)
                     {
-                        if(book.Name == startBook)
+                        if (book.Name == startBook)
                         {
                             isInBooksRange = true;
                         }
@@ -402,7 +404,7 @@ namespace ChurchAddIn
                                 }
                             }
                         }
-                        if(book.Name == endBook)
+                        if (book.Name == endBook)
                         {
                             break;
                         }
@@ -410,7 +412,7 @@ namespace ChurchAddIn
                 });
                 bibleTextBox.Text = strBuilder.ToString();
             }
-            if(string.IsNullOrWhiteSpace(bibleTextBox.Text))
+            if (string.IsNullOrWhiteSpace(bibleTextBox.Text))
             {
                 bibleTextBox.Text = "No results.";
             }

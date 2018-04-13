@@ -199,7 +199,9 @@
             this.addSlidesButton.Image = global::ChurchAddIn.Properties.Resources.Plus;
             this.addSlidesButton.Label = "Add new slides";
             this.addSlidesButton.Name = "addSlidesButton";
+            this.addSlidesButton.ScreenTip = "Add new slides";
             this.addSlidesButton.ShowImage = true;
+            this.addSlidesButton.SuperTip = "Select PowerPoint file to add after selected slide";
             this.addSlidesButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.addSlidesButton_Click);
             // 
             // chart1

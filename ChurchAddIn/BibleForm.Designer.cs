@@ -280,6 +280,7 @@
             // 
             // fromComboBox
             // 
+            this.fromComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.fromComboBox.Font = new System.Drawing.Font("Calibri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fromComboBox.FormattingEnabled = true;
             this.fromComboBox.Location = new System.Drawing.Point(274, 5);
@@ -289,6 +290,7 @@
             // 
             // toComboBox
             // 
+            this.toComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toComboBox.Font = new System.Drawing.Font("Calibri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toComboBox.FormattingEnabled = true;
             this.toComboBox.Location = new System.Drawing.Point(274, 40);
