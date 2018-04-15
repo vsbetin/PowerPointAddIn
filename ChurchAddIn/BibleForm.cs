@@ -363,8 +363,12 @@ namespace ChurchAddIn
 
         private async void searchButton_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(searchBox.Text))
+            {
+                return;
+            }
             GetBibleName();
-            label2.Text = "";
+            label2.Text = searchBox.Text;
             bibleTextBox.Clear();
             treeChapterView.SelectedNode = null;
             nextButton.Enabled = false;
@@ -375,43 +379,40 @@ namespace ChurchAddIn
             treeChapterView.Enabled = false;
             fromComboBox.Enabled = false;
             toComboBox.Enabled = false;
-            if (!string.IsNullOrWhiteSpace(searchBox.Text))
+            var str = searchBox.Text.Trim().ToUpper();
+            var strBuilder = new StringBuilder();
+            var startBook = fromComboBox.Text;
+            var endBook = toComboBox.Text;
+            await Task.Factory.StartNew(() =>
             {
-                var str = searchBox.Text.ToUpper();
-                var strBuilder = new StringBuilder();
-                var startBook = fromComboBox.Text;
-                var endBook = toComboBox.Text;
-                await Task.Factory.StartNew(() =>
+                bool isInBooksRange = false;
+                foreach (var book in bible.Books)
                 {
-                    bool isInBooksRange = false;
-                    foreach (var book in bible.Books)
+                    if (book.Name == startBook)
                     {
-                        if (book.Name == startBook)
+                        isInBooksRange = true;
+                    }
+                    if (isInBooksRange)
+                    {
+                        foreach (var chapter in book.Chapters)
                         {
-                            isInBooksRange = true;
-                        }
-                        if (isInBooksRange)
-                        {
-                            foreach (var chapter in book.Chapters)
+                            foreach (var verse in chapter.Verses)
                             {
-                                foreach (var verse in chapter.Verses)
+                                if (verse.Text.ToUpper().Contains(str))
                                 {
-                                    if (verse.Text.ToUpper().Contains(str))
-                                    {
-                                        strBuilder.Append(book.Name + " " + chapter.Number + ":" + verse.Number + Environment.NewLine);
-                                        strBuilder.Append(verse.Text + Environment.NewLine + Environment.NewLine);
-                                    }
+                                    strBuilder.Append(book.Name + " " + chapter.Number + ":" + verse.Number + Environment.NewLine);
+                                    strBuilder.Append(verse.Text + Environment.NewLine + Environment.NewLine);
                                 }
                             }
                         }
-                        if (book.Name == endBook)
-                        {
-                            break;
-                        }
                     }
-                });
-                bibleTextBox.Text = strBuilder.ToString();
-            }
+                    if (book.Name == endBook)
+                    {
+                        break;
+                    }
+                }
+            });
+            bibleTextBox.Text = strBuilder.ToString();
             if (string.IsNullOrWhiteSpace(bibleTextBox.Text))
             {
                 bibleTextBox.Text = "No results.";

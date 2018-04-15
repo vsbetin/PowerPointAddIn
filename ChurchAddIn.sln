@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChurchAddIn", "ChurchAddIn\ChurchAddIn.csproj", "{A71B5B33-BA7D-40ED-B08E-09FC7827C479}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChurchAddIn2010", "ChurchAddIn2010\ChurchAddIn2010.csproj", "{BE9F2215-4B55-4998-B3D2-D5D1959E3C14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A71B5B33-BA7D-40ED-B08E-09FC7827C479}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A71B5B33-BA7D-40ED-B08E-09FC7827C479}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A71B5B33-BA7D-40ED-B08E-09FC7827C479}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE9F2215-4B55-4998-B3D2-D5D1959E3C14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE9F2215-4B55-4998-B3D2-D5D1959E3C14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE9F2215-4B55-4998-B3D2-D5D1959E3C14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE9F2215-4B55-4998-B3D2-D5D1959E3C14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
