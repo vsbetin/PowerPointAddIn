@@ -93,6 +93,10 @@ namespace ChurchAddIn2010
             {
                 this.Text = "English NIV ";
             }
+            else if (version == BibleVersion.EnglishESV)
+            {
+                this.Text = "English ESV ";
+            }
             else
             {
                 this.Text = "English NIV ";
