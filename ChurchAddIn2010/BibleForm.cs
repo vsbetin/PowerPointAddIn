@@ -268,10 +268,8 @@ namespace ChurchAddIn2010
                         var tempVerse = ver.Text + " ";
                         if (verseNumberCheckBox.Checked && ver.Number > 0)
                         {
-                            if (ver.Number < 10 && paragrapgCheckBox.Checked)
-                                tempVerse = " " + ver.Number.ToString() + ". ";
-                            else
-                                tempVerse = ver.Number.ToString() + ". ";
+                            tempVerse = ver.Number.ToString() + ". ";
+
                             tempVerse += ver.Text[0].ToString().ToUpper() + ver.Text.Substring(1) + " ";
                         }
                         if (paragrapgCheckBox.Checked)
