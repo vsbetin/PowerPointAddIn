@@ -12,6 +12,12 @@ namespace ChurchAddIn
     {
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
+            Globals.ThisAddIn.Application.SlideShowOnNext += Application_SlideShowOnNext;
+        }
+
+        private void Application_SlideShowOnNext(PowerPoint.SlideShowWindow Wn)
+        {
+            Console.WriteLine();
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
