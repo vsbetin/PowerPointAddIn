@@ -1,23 +1,55 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Xml.Linq;
 using PowerPoint = Microsoft.Office.Interop.PowerPoint;
-using Office = Microsoft.Office.Core;
+using System.IO;
+using Newtonsoft.Json;
+using System.Windows.Forms;
 
 namespace ChurchAddIn
 {
     public partial class ThisAddIn
     {
+        private static object _locker = new object();
+
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
-            Globals.ThisAddIn.Application.SlideShowOnNext += Application_SlideShowOnNext;
+            Globals.ThisAddIn.Application.SlideShowNextSlide += Application_SlideShowNextSlide;
         }
 
-        private void Application_SlideShowOnNext(PowerPoint.SlideShowWindow Wn)
+        private void Application_SlideShowNextSlide(PowerPoint.SlideShowWindow Wn)
         {
-            Console.WriteLine();
+            try
+            {
+                Wn.Activate();
+                var text = new StringBuilder();
+
+                foreach (Microsoft.Office.Interop.PowerPoint.Shape shape in Wn.View.Slide.Shapes)
+                {
+                    if (shape.HasTextFrame == Microsoft.Office.Core.MsoTriState.msoTrue)
+                    {
+                        var textFrame = shape.TextFrame;
+                        if (textFrame.HasText == Microsoft.Office.Core.MsoTriState.msoTrue)
+                        {
+                            text.Append(textFrame.TextRange.Text);
+                        }
+                    }
+                }
+
+                lock (_locker)
+                {
+                    File.WriteAllText(@"slide-text", text.ToString().Replace("", "").Trim());
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error!");
+                lock (_locker)
+                {
+                    File.AppendAllText(
+                        @"power-point-error.log",
+                        $"Error occured: {DateTimeOffset.UtcNow}" + Environment.NewLine + JsonConvert.SerializeObject(ex));
+                }
+            }
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
