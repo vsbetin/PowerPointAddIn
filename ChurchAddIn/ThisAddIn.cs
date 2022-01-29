@@ -37,7 +37,12 @@ namespace ChurchAddIn
 
                 lock (_locker)
                 {
-                    File.WriteAllText(@"slide-text", text.ToString().Replace("", "").Trim());
+                    var resultText = text.ToString()
+                        .Replace("\r", Environment.NewLine)
+                        .Replace("", Environment.NewLine)
+                        .Replace("\v", Environment.NewLine)
+                        .Trim();
+                    File.WriteAllText(@"slide-text", resultText);
                 }
             }
             catch (Exception ex)
